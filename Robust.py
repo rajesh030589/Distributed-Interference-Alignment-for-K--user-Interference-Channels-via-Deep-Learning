@@ -115,11 +115,28 @@ marker_list = ["o", "+", "*", ">", "<", "^", "v"]
 for i in range(len(string_list)):
     MSE_Data = []
     for beta in Beta:
+        M1 = []
         for C in range(3):
             file1 = get_file(beta, C, 50, "Robust_MSE_Data", string_list[i])
             MSE = pickle.load(open(file1, "rb"))
             m1 = MSE["MSE"]
             MSE_Data.append(np.mean(10 * np.log10(m1)))
+
+    plt.plot(MSE_Data, label=string_list[i], marker=marker_list[i])
+plt.legend()
+plt.grid(True)
+plt.ylabel("MSE per User (dB)")
+plt.show()
+for i in range(len(string_list)):
+    MSE_Data = []
+    for beta in Beta:
+        M1 = []
+        for C in range(3):
+            file1 = get_file(beta, C, 50, "Robust_MSE_Data", string_list[i])
+            MSE = pickle.load(open(file1, "rb"))
+            m1 = MSE["MSE"]
+            M1.append(np.mean(10 * np.log10(m1)))
+        MSE_Data.append(np.mean(M1))
 
     plt.plot(MSE_Data, label=string_list[i], marker=marker_list[i])
 plt.legend()
